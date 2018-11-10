@@ -6,6 +6,16 @@ var app = new Vue({
         info:{
             header: 'ABE Password Platform',
             footer: '@Copyright by Blockchain Lab @Fudan University'
+        },
+        user:{
+            name:'',
+            pass:'',
+            tip:'',
+            policy:{
+                tip:'',
+                pass:''
+            },
+            attr:[],
         }
     }
   })
