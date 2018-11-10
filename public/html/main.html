@@ -8,54 +8,96 @@
 
 </head>
 <body>
-    <el-container id="app">
+    <el-container id="app" class="app">
     <el-header><h1 class="center">{{info.header}}</h1></el-header>
     <el-main>
-
-        <el-row>
-            <el-col :span="8">
-                <h3>Sign up</h3>
+    <el-row>
+        <el-tabs type="border-card">
+            <el-tab-pane>
+                <span slot="label"><i class="el-icon-upload"></i> 注册</span>
+                <el-col :span="24">
+                <h3 class="center">Sign up</h3>
                 <el-input
+                class="margin-top-5"
                 placeholder="User Name"
                 prefix-icon="el-icon-caret-right"
                 v-model="user.name"
                 clearable>
                 </el-input>
                 <el-input
+                class="margin-top-5"
                 placeholder="Password"
                 prefix-icon="el-icon-caret-right"
                 v-model="user.pass"
                 clearable>
                 </el-input>
                 <el-input
-                placeholder="tip message"
+                class="margin-top-5"
+                placeholder="身份证"
                 prefix-icon="el-icon-caret-right"
-                v-model="user.tip"
+                v-model="user.SFZ"
                 clearable>
                 </el-input>
                 <el-input
-                placeholder="User Name"
+                class="margin-top-5"
+                placeholder="手机"
                 prefix-icon="el-icon-caret-right"
-                v-model="user.name"
+                v-model="user.SJ"
                 clearable>
                 </el-input>
                 <el-input
-                placeholder="User Name"
+                class="margin-top-5"
+                placeholder="邮箱"
                 prefix-icon="el-icon-caret-right"
-                v-model="user.name"
+                v-model="user.YX"
                 clearable>
                 </el-input>
-            </el-col>
-            <el-col :span="8">
-                <h3>Sign in</h3>
-                <div></div>
-            </el-col>
-            <el-col :span="8">
-                <h3>Sign up</h3>
-                <div></div>
-            </el-col>
-        </el-row>
-
+                </el-col>
+                <el-col :span="24" 
+                class="margin-top-5">
+                <!-- <el-col :span="4">自设属性: </el-col> -->
+                <el-col :span="24">
+                <el-input
+                v-if="newAttr.show"
+                v-model="newAttr.value"
+                ref="save"
+                size="small"
+                @keyup.enter.native="handleInputConfirm()"
+                @blur="handleInputConfirm()"
+                ></el-input>
+                <el-button 
+                v-else 
+                size="small" 
+                @click="showInput()"
+                icon="el-icon-plus"
+                type="success"
+                >自设属性</el-button>
+                </el-col>
+                <el-col :span="24">用户属性:</el-col>
+                <el-col :span="24">
+                    <el-tag class="margin-3" type="info">UN:{{user.name}}</el-tag>
+                    <el-tag class="margin-3" type="info">SFZ:{{user.SFZ}}</el-tag>
+                    <el-tag class="margin-3" type="info">SJ:{{user.SJ}}</el-tag>
+                    <el-tag class="margin-3" type="info">YX:{{user.YX}}</el-tag>
+                </el-col>
+                <el-col :span="24">
+                <el-tag
+                :key="attr"
+                v-for="attr in user.attr"
+                closable
+                class="margin-3"
+                type="success"
+                :disable-transitions="false"
+                @close="delAttr(attr)">
+                ZS:{{attr}}
+                </el-tag>
+                </el-col>
+            </el-tab-pane>
+            <el-tab-pane label="登录">登录</el-tab-pane>
+            <el-tab-pane label="改密">改密</el-tab-pane>
+            <el-tab-pane label="提示">提示</el-tab-pane>
+        </el-tabs>
+    </el-row>
     </el-main>
     <el-footer><p class="center"><code>{{info.footer}}</code></p></el-footer>
     </el-container>
