@@ -15,8 +15,18 @@
         <el-tabs type="border-card">
             <el-tab-pane>
                 <span slot="label"><i class="el-icon-upload"></i> 注册</span>
+                <el-col :span="12">
+                <p>Register</p>
+                </el-col>
+                <el-col :span="12" class="right">
+                <el-button 
+                type="success" 
+                icon="el-icon-check" 
+                :disabled="!canSubmit"
+                @click="Register()"
+                circle></el-button>
+                </el-col>
                 <el-col :span="24">
-                <h3 class="center">Sign up</h3>
                 <el-input
                 class="margin-top-5"
                 placeholder="User Name"
@@ -26,9 +36,20 @@
                 </el-input>
                 <el-input
                 class="margin-top-5"
-                placeholder="Password"
+                placeholder="Password"                
+                type="password"
                 prefix-icon="el-icon-caret-right"
-                v-model="user.pass"
+                v-model="user.pass"                
+                @change="confirmPass()"
+                clearable>
+                </el-input>
+                <el-input
+                type="password"
+                class="margin-top-5"
+                placeholder="Confirm Password"
+                prefix-icon="el-icon-caret-right"
+                v-model="user.passpass"
+                @change="confirmPass()"
                 clearable>
                 </el-input>
                 <el-input
@@ -71,6 +92,7 @@
                 @click="showInput()"
                 icon="el-icon-plus"
                 type="success"
+                style="display:inline-block"
                 >自设属性</el-button>
                 </el-col>
                 <el-col :span="24">用户属性:</el-col>
@@ -109,7 +131,8 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- Element UI -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="crypto-js/crypto-js.js"></script>
     <!-- Customized -->
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <script src="html.js/main.js"></script>
 </html>

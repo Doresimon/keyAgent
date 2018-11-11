@@ -1,6 +1,9 @@
 .center{
     text-align: center
 }
+.right{
+    text-align: right
+}
 .app{
     padding-left: 30%;
     padding-right: 30%;
