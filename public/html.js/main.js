@@ -84,7 +84,16 @@ var app = new Vue({
                 UserAttributes:attrs.join(','),
             }
 
+            // data post here
             console.log(_Post)
+
+            axios.post('/signup', _Post)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
 
         changePanel(step){
