@@ -29,37 +29,9 @@ var app = new Vue({
             show:false,
             value:'',
         },
-        // setting:{
-        //     register:{
-        //         status:1,
-        //     },
-        //     login:{
-        //         status:0,
-        //     },
-        //     changePass:{
-        //         status:0,
-        //     },
-        //     getTip:{
-        //         status:0,
-        //     },
-        // },
-        // current:'register',
-        // statusMap:{
-        //     0:"wait",
-        //     1:"process",
-        //     2:"finish",
-        //     3:"error",
-        //     4:"success",
-        // }
     },
     methods:{
         Register(){
-        //     "UserName":             {"UN:roy"},
-        // "UserPasswordHash":     {hash},
-        // "ChangePasswordPolicy": {"(UN:roy AND ZS:shuai AND ZS:hei AND SFZ:678987000236787654 AND SJ:17317301908)"},
-        // "GetTipPolicy":         {"(UN:roy AND SFZ:678987000236787654 AND SJ:17317301908)"},
-        // "GetTipMessage":        {"shuai & hei"},
-        // "UserAttributes":       {"UN:roy,SFZ:678987000236787654,SJ:17317301908,YX:zry_nuaa@897.com,ZS:shuai,ZS:hei"},
             let passHash = CryptoJS.SHA256(this.user.pass).toString()
             let attrs = []
             let tips = []
@@ -95,14 +67,102 @@ var app = new Vue({
                 console.log(error);
             });
         },
-
-        changePanel(step){
-            for (const key in this.setting) {
-                const e = this.setting[key];
-                e.status = 0
+        ChangePass(){
+            let passHash = CryptoJS.SHA256(this.user.pass).toString()
+            let attrs = []
+            attrs.push(`UN:${this.user.name}`)
+            attrs.push(`SFZ:${this.user.SFZ}`)
+            attrs.push(`SJ:${this.user.SJ}`)
+            attrs.push(`YX:${this.user.YX}`)
+            for (let i = 0; i < this.user.attr.length; i++) {
+                const e = this.user.attr[i];
+                attrs.push(`ZS:${e}`)
             }
-            this.setting[step].status = 1
-            this.current = step
+
+            let _Post = {
+                UserName:`UN:${this.user.name}`,
+                UserPasswordHash:passHash,
+                UserAttributes:attrs.join(','),
+            }
+
+            // data post here
+            console.log(_Post)
+
+            axios.post('/changepassword', _Post)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        GetTip(){
+            let attrs = []
+            attrs.push(`UN:${this.user.name}`)
+            attrs.push(`SFZ:${this.user.SFZ}`)
+            attrs.push(`SJ:${this.user.SJ}`)
+            attrs.push(`YX:${this.user.YX}`)
+            for (let i = 0; i < this.user.attr.length; i++) {
+                const e = this.user.attr[i];
+                attrs.push(`ZS:${e}`)
+            }
+
+            let _Post = {
+                UserName:`UN:${this.user.name}`,
+                UserAttributes:attrs.join(','),
+            }
+
+            // data post here
+            console.log(_Post)
+
+            axios.post('/gettip', _Post)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        Login(){
+            let passHash = CryptoJS.SHA256(this.user.pass).toString()
+
+            let _Post = {
+                UserName:`UN:${this.user.name}`,
+                UserPasswordHash:passHash,
+            }
+
+            // data post here
+            console.log(_Post)
+
+            axios.post('/login', _Post)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        changeTab(tab){
+            console.log(tab.label)
+            this.clearContent()
+        },
+        clearContent(){
+            this.user = {
+                name:'',
+                pass:'',
+                passpass:'',
+                SFZ:'',
+                SJ:'',
+                YX:'',
+                tip:'',
+                policy:{
+                    tip:'',
+                    pass:''
+                },
+                attr:[],
+                a:[],
+            }
         },
 
         delAttr(attr) {
@@ -138,7 +198,7 @@ var app = new Vue({
     },
     computed:{
         // 仅读取
-        canSubmit() {
+        canRegister() {
             let ok = true
             ok = ok && this.user.name!=''
             ok = ok && this.user.pass!=''
@@ -148,6 +208,30 @@ var app = new Vue({
             ok = ok && this.user.YX!=''
 
             ok = ok && (this.user.pass===this.user.passpass)
+
+            return ok
+        },
+        canGetTip() {
+            let ok = true
+            ok = ok && this.user.name!=''
+            ok = ok && this.user.SFZ!=''
+            ok = ok && this.user.SJ!=''
+            ok = ok && this.user.YX!=''
+            return ok
+        },
+        canChangePass() {
+            let ok = true
+            ok = ok && this.user.name!=''
+            ok = ok && this.user.pass!=''
+            ok = ok && this.user.SFZ!=''
+            ok = ok && this.user.SJ!=''
+            ok = ok && this.user.YX!=''
+            return ok
+        },
+        canLogin() {
+            let ok = true
+            ok = ok && this.user.name!=''
+            ok = ok && this.user.pass!=''
 
             return ok
         },
