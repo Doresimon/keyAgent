@@ -22,10 +22,17 @@
                 </el-col>
                 <el-col :span="12" class="right">
                     <el-button 
+                    type="info" 
+                    icon="el-icon-edit"
+                    @click="GenPolicy()"
+                    alt="生成policy"
+                    circle></el-button>
+                    <el-button 
                     type="success" 
                     icon="el-icon-check" 
                     :disabled="!canRegister"
                     @click="Register()"
+                    alt="注册"
                     circle></el-button>
                 </el-col>
                 <el-col :span="24">
@@ -113,6 +120,22 @@
                     ZS:{{attr}}
                     </el-tag>
                 </el-col>
+                <el-col :span="24" class="margin-top-5">
+                    <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="password policy"
+                    v-model="user.policy.pass">
+                    </el-input>
+                </el-col>
+                <el-col :span="24" class="margin-top-5">
+                    <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="tip policy"
+                    v-model="user.policy.tip">
+                    </el-input>
+                </el-col>
             </el-tab-pane>
             <el-tab-pane label="L">
                 <span slot="label"><i class="el-icon-menu"></i> 登录</span>
@@ -152,6 +175,12 @@
                     <p>Modify Password</p>
                 </el-col>
                 <el-col :span="12" class="right">
+                    <el-button 
+                    type="info" 
+                    icon="el-icon-edit"
+                    @click="GenPolicy()"
+                    alt="生成policy"
+                    circle></el-button>
                     <el-button 
                     type="success" 
                     icon="el-icon-check" 
@@ -234,6 +263,22 @@
                     @close="delAttr(attr)">
                     ZS:{{attr}}
                     </el-tag>
+                </el-col>
+                <el-col :span="24" class="margin-top-5">
+                    <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="password policy"
+                    v-model="user.policy.pass">
+                    </el-input>
+                </el-col>
+                <el-col :span="24" class="margin-top-5">
+                    <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="tip policy"
+                    v-model="user.policy.tip">
+                    </el-input>
                 </el-col>
             </el-tab-pane>
             <el-tab-pane label="T">

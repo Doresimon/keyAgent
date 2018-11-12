@@ -39,13 +39,22 @@ var app = new Vue({
             attrs.push(`SFZ:${this.user.SFZ}`)
             attrs.push(`SJ:${this.user.SJ}`)
             attrs.push(`YX:${this.user.YX}`)
-            this.user.policy.tip = `${attrs.join(' AND ')}`
+            // this.user.policy.tip = `${attrs.join(' AND ')}`
             for (let i = 0; i < this.user.attr.length; i++) {
                 const e = this.user.attr[i];
                 attrs.push(`ZS:${e}`)
                 tips.push(`${e}`)
             }
-            this.user.policy.pass = `${attrs.join(' AND ')}`
+            // this.user.policy.pass = `${attrs.join(' AND ')}`
+
+            // let _Post = {
+            //     UserName:`UN:${this.user.name}`,
+            //     UserPasswordHash:passHash,
+            //     ChangePasswordPolicy:`(${this.user.policy.pass})`,
+            //     GetTipPolicy:`(${this.user.policy.tip})`,
+            //     GetTipMessage:tips.join(' & '),
+            //     UserAttributes:attrs.join(','),
+            // }
 
             let _Post = {
                 UserName:`UN:${this.user.name}`,
@@ -66,6 +75,21 @@ var app = new Vue({
             .catch(function (error) {
                 console.log(error);
             });
+        },
+        GenPolicy(){
+            let attrs = []
+            let tips = []
+            attrs.push(`UN:${this.user.name}`)
+            attrs.push(`SFZ:${this.user.SFZ}`)
+            attrs.push(`SJ:${this.user.SJ}`)
+            attrs.push(`YX:${this.user.YX}`)
+            this.user.policy.tip = `${attrs.join(' AND ')}`
+            for (let i = 0; i < this.user.attr.length; i++) {
+                const e = this.user.attr[i];
+                attrs.push(`ZS:${e}`)
+                tips.push(`${e}`)
+            }
+            this.user.policy.pass = `${attrs.join(' AND ')}`
         },
         ChangePass(){
             let passHash = CryptoJS.SHA256(this.user.pass).toString()
@@ -206,6 +230,8 @@ var app = new Vue({
             ok = ok && this.user.SFZ!=''
             ok = ok && this.user.SJ!=''
             ok = ok && this.user.YX!=''
+            ok = ok && this.user.policy.pass!=''
+            ok = ok && this.user.policy.tip!=''
 
             ok = ok && (this.user.pass===this.user.passpass)
 
