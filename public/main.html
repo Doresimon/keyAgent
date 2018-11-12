@@ -9,7 +9,9 @@
 </head>
 <body>
     <el-container id="app" class="app">
-    <el-header><h1 class="center">{{info.header}}</h1></el-header>
+    <el-header>
+        <h1 class="center">{{info.header}}</h1>
+    </el-header>
     <el-main>
     <el-row>
         <el-tabs type="border-card" @tab-click="changeTab">
@@ -316,6 +318,15 @@
                 </el-col>
             </el-tab-pane>
         </el-tabs>
+    </el-row>
+    <el-row>
+        
+            <div class="scroll-area">
+                <div class="scroll">
+                    <span class="today-scroll-content">复旦ABE</span>
+                    <span class="today-scroll-content">ABE中的战斗机 oh~yeah~</span>
+                </div>
+            </div>
     </el-row>
     </el-main>
     <el-footer><p class="center"><code>{{info.footer}}</code></p></el-footer>
